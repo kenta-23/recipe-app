@@ -98,7 +98,7 @@ export default function App() {
           <div key={r.id} style={styles.card}>
             <div style={styles.cardHeader}>
               <h3>{r.name}</h3>
-              <button onClick={() => toggleFavorite(r.id)} style={StylePropertyMap.star}>
+              <button onClick={() => toggleFavorite(r.id)} style={styles.star}>
                 {r.favorite ? "★" : "☆"}
               </button>
             </div>
