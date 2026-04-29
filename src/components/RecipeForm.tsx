@@ -52,7 +52,7 @@ export default function RecipeForm({ onAdd }: Props) {
 
       <input
         style={styles.input}
-        placeholder="タグ（和食 / 洋食）"
+        placeholder="タグ（和食 / 洋食 / 中華）"
         value={tag}
         onChange={e => setTag(e.target.value)}
       />
