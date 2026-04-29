@@ -23,8 +23,11 @@ export default function RecipeCard({ recipe, onToggleFavorite }: Props) {
       <div>
         <p style={{ marginBottom: 4}}>食材：</p>
         {recipe.ingredients.map((i, idx) => (
-            <div key={idx} style={{display: "flex", justifyContent: "space-between", padding: "2px 0",}}>
-                {i.name} {i.amount}
+            <div key={idx} style={{display: "flex", justifyContent: "space-between", padding: "2px 0", width: "100%",}}>
+                <span>{i.name}</span>
+                <span style={{textAlign: "right", minWidth: 60}}>
+                    {i.amount}
+                </span>
             </div>
         ))}
       </div>
