@@ -1,14 +1,15 @@
 import type { Recipe } from "../types/recipe";
 import { useState } from "react";
 
-const [open, setOpen] = useState(false);
 
 type Props = {
-  recipe: Recipe;
-  onToggleFavorite: (id: number) => void;
+    recipe: Recipe;
+    onToggleFavorite: (id: number) => void;
 };
 
 export default function RecipeCard({ recipe, onToggleFavorite }: Props) {
+  const [open, setOpen] = useState(false);
+  
   return (
     <div style={styles.card}>
       <div style={styles.header} onClick={() => setOpen(!open)}>
