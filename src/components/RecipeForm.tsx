@@ -7,7 +7,7 @@ type Props = {
 
 export default function RecipeForm({ onAdd }: Props) {
   const [name, setName] = useState("");
-  const [ingredients, setIngredients] = useState("");
+  const [ingredients, setIngredients] = useState([{ name: "", amount: "" }]);
   const [tag, setTag] = useState("");
   const [memo, setMemo] = useState("");
 
@@ -18,9 +18,7 @@ export default function RecipeForm({ onAdd }: Props) {
       id: Date.now(),
       name,
       ingredients: ingredients
-        .split(",")
-        .map(i => i.trim())
-        .filter(Boolean),
+        .filter(ing => ing.name.trim()),
       tag,
       memo,
       favorite: false,
@@ -29,7 +27,7 @@ export default function RecipeForm({ onAdd }: Props) {
     onAdd(newRecipe);
 
     setName("");
-    setIngredients("");
+    setIngredients([{ name: "", amount: "" }]);
     setTag("");
     setMemo("");
   };
@@ -43,12 +41,34 @@ export default function RecipeForm({ onAdd }: Props) {
         onChange={e => setName(e.target.value)}
       />
 
-      <input
-        style={styles.input}
-        placeholder="食材（例：卵, 鶏肉）"
-        value={ingredients}
-        onChange={e => setIngredients(e.target.value)}
-      />
+      {ingredients.map((ing, index) => (
+        <div key={index} style={{ display: "flex", gap: 8}}>
+            <input
+              style={styles.input}
+              placeholder="食材"
+              value={ing.name}
+              onChange={e => {
+                const newList = [...ingredients];
+                newList[index].name = e.target.value;
+                setIngredients(newList);
+              }}
+            />
+            <input
+              style={styles.input}
+              placeholder="分量"
+              value={ing.amount}
+              onChange={e => {
+                const newList = [...ingredients];
+                newList[index].amount = e.target.value;
+                setIngredients(newList);
+              }}
+            />
+        </div>
+      ))}
+
+      <button type="button" onClick={() => setIngredients([...ingredients, { name: "", amount: ""}])}>
+        + 食材追加
+      </button>
 
       <input
         style={styles.input}

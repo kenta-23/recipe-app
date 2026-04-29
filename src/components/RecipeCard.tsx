@@ -20,9 +20,20 @@ export default function RecipeCard({ recipe, onToggleFavorite }: Props) {
 
       {recipe.tag && <p style={styles.tag}>#{recipe.tag}</p>}
 
-      <p>食材：{recipe.ingredients.join(", ")}</p>
+      <div>
+        食材：
+        {recipe.ingredients.map((i, idx) => (
+            <div key={idx}>
+                {i.name} {i.amount}
+            </div>
+        ))}
+      </div>
 
-      {recipe.memo && <p>{recipe.memo}</p>}
+      {recipe.memo && (
+        <p style={{ whiteSpace: "pre-line"}}>
+            {recipe.memo}
+        </p>
+      )}
     </div>
   );
 }

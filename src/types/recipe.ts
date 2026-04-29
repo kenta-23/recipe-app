@@ -1,7 +1,12 @@
+type Ingredient = {
+    name: string;
+    amount: string;
+};
+
 export type Recipe = {
   id: number;
   name: string;
-  ingredients: string[];
+  ingredients: Ingredient[];
   tag: string;
   memo: string;
   favorite: boolean;
