@@ -1,4 +1,7 @@
 import type { Recipe } from "../types/recipe";
+import { useState } from "react";
+
+const [open, setOpen] = useState(false);
 
 type Props = {
   recipe: Recipe;
@@ -8,39 +11,48 @@ type Props = {
 export default function RecipeCard({ recipe, onToggleFavorite }: Props) {
   return (
     <div style={styles.card}>
-      <div style={styles.header}>
-        <h3>{recipe.name}</h3>
-        <button
-          style={styles.star}
-          onClick={() => onToggleFavorite(recipe.id)}
-        >
-          {recipe.favorite ? "★" : "☆"}
-        </button>
+      <div style={styles.header} onClick={() => setOpen(!open)}>
+         <h3>
+            {open ? "▼" : "▶"} {recipe.name}
+         </h3>
+         <button
+           style={styles.star}
+           onClick={(e) => {
+                e.stopPropagation();
+                onToggleFavorite(recipe.id);
+           }}
+         >
+           {recipe.favorite ? "★" : "☆"}
+         </button>
       </div>
 
-      {recipe.tag && <p style={styles.tag}>#{recipe.tag}</p>}
+      {open && (
+        <>
+          {recipe.tag && <p style={styles.tag}>#{recipe.tag}</p>}
 
-      <div>
-        <p style={{ marginBottom: 4}}>食材：</p>
-        {recipe.ingredients.map((i, idx) => (
-            <div key={idx} style={{display: "flex", justifyContent: "space-between", padding: "2px 0", width: "100%",}}>
-                <span>{i.name}</span>
-                <span style={{textAlign: "right", minWidth: 60}}>
-                    {i.amount}
-                </span>
+          <div>
+            <p style={{ marginBottom: 4}}>食材：</p>
+            {recipe.ingredients.map((i, idx) => (
+                <div key={idx} style={{display: "flex", justifyContent: "space-between", padding: "2px 0", width: "100%",}}>
+                    <span>{i.name}</span>
+                    <span style={{textAlign: "right", minWidth: 60}}>
+                        {i.amount}
+                    </span>
+                </div>
+            ))}
+          </div>
+    
+          <div style={{ height: 12}} />
+    
+          {recipe.memo && (
+            <div>
+              <p style={{marginBottom: 4 }}>レシピ：</p>
+              <p style={{ whiteSpace: "pre-line"}}>
+                  {recipe.memo}
+              </p>
             </div>
-        ))}
-      </div>
-
-      <div style={{ height: 12}} />
-
-      {recipe.memo && (
-        <div>
-          <p style={{marginBottom: 4 }}>レシピ：</p>
-          <p style={{ whiteSpace: "pre-line"}}>
-              {recipe.memo}
-          </p>
-        </div>
+          )}
+        </>
       )}
     </div>
   );
