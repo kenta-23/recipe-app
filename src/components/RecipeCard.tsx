@@ -10,15 +10,15 @@ type Props = {
 
 export default function RecipeCard({ recipe, onToggleFavorite, onUpdate }: Props) {
   const [open, setOpen] = useState(false);
-  
   const [isEditing, setIsEditing] = useState(false);
-  
   const [editName, setEditName] = useState(recipe.name);
   const [editMemo, setEditMemo] = useState(recipe.memo);
-  
+  const [editIngredients, setEditIngredients] = useState(recipe.ingredients);
+
   useEffect(() => {
     setEditName(recipe.name);
     setEditMemo(recipe.memo);
+    setEditIngredients(recipe.ingredients);
   }, [recipe]);
 
   return (
@@ -27,23 +27,26 @@ export default function RecipeCard({ recipe, onToggleFavorite, onUpdate }: Props
         <h3>
           {open ? "▼" : "▶"} {recipe.name}
         </h3>
-        <button
-          style={styles.star}
-          onClick={(e) => {
+
+        <div style={{ display: "flex", gap: 8}}>
+          <button
+            style={styles.star}
+            onClick={(e) => {
               e.stopPropagation();
               onToggleFavorite(recipe.id);
-          }}>
-          {recipe.favorite ? "★" : "☆"}
-        </button>
+            }}>
+            {recipe.favorite ? "★" : "☆"}
+          </button>
 
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            setIsEditing(!isEditing);
-            setOpen(true);
-          }}>
-          編集
-        </button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsEditing(!isEditing);
+              setOpen(true);
+            }}>
+            編集
+          </button>
+        </div>
       </div>
 
       {open && (
@@ -57,6 +60,41 @@ export default function RecipeCard({ recipe, onToggleFavorite, onUpdate }: Props
                   onChange={(e) => setEditName(e.target.value)}
                 />
               </label>
+
+              <p>食材：</p>
+
+              {editIngredients.map((ing, idx) => (
+                <div key={idx}>
+                  <input type="text"
+                    value={ing.name}
+                    placeholder="食材"
+                    onChange={(e) => {
+                      const newList = editIngredients.map((item, i) =>
+                        i === idx ? { ...item, name: e.target.value } : item
+                    );
+                      setEditIngredients(newList);
+                    }}
+                  />
+
+                  <input type="text"
+                    value={ing.amount}
+                    placeholder="分量"
+                    onChange={(e) => {
+                      const newList = editIngredients.map((item, i) =>
+                        i === idx ? {...item, amount: e.target.value } : item
+                      );
+                      setEditIngredients(newList);
+                    }}
+                  />
+                </div>
+              ))}
+
+              <button
+                onClick={() =>
+                setEditIngredients([...editIngredients, { name: "", amount: ""}])
+                }>
+                + 食材追加
+              </button>
 
               <label>
                 レシピ
@@ -72,6 +110,7 @@ export default function RecipeCard({ recipe, onToggleFavorite, onUpdate }: Props
                     ...recipe,
                     name: editName,
                     memo: editMemo,
+                    ingredients: editIngredients,
                   });
                   setIsEditing(false);
                   setOpen(false);
