@@ -5,10 +5,11 @@ type Props = {
     recipe: Recipe;
     onToggleFavorite: (id: number) => void;
     onUpdate: (recipe: Recipe) => void;
+    onDelete: (id: number) => void;
 };
 
 
-export default function RecipeCard({ recipe, onToggleFavorite, onUpdate }: Props) {
+export default function RecipeCard({ recipe, onToggleFavorite, onUpdate, onDelete }: Props) {
   const [open, setOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editName, setEditName] = useState(recipe.name);
@@ -46,6 +47,20 @@ export default function RecipeCard({ recipe, onToggleFavorite, onUpdate }: Props
             }}>
             編集
           </button>
+
+          {!isEditing && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+
+                const ok = window.confirm("本当に削除しますか？");
+                if (ok) {
+                  onDelete(recipe.id);
+                }
+              }}>
+              削除
+            </button>
+          )}
         </div>
       </div>
 

@@ -33,6 +33,10 @@ export default function App() {
     );
   };
 
+  const deleteRecipe = (id: number) => {
+    setRecipes(recipes.filter(r => r.id !== id));
+  };
+
   return (
     <div style={{ maxWidth: 480, margin: "0 auto", padding: 16 }}>
       <h1 style={{ textAlign: "center" }}>レシピアプリ</h1>
@@ -45,6 +49,7 @@ export default function App() {
           recipe={r}
           onToggleFavorite={toggleFavorite}
           onUpdate={updateRecipe}
+          onDelete={deleteRecipe}
         />
       ))}
     </div>
