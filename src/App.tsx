@@ -27,6 +27,12 @@ export default function App() {
     );
   };
 
+  const updateRecipe = (updated: Recipe) => {
+    setRecipes(
+      recipes.map(r => (r.id === updated.id ? updated : r))
+    );
+  };
+
   return (
     <div style={{ maxWidth: 480, margin: "0 auto", padding: 16 }}>
       <h1 style={{ textAlign: "center" }}>レシピアプリ</h1>
@@ -38,6 +44,7 @@ export default function App() {
           key={r.id}
           recipe={r}
           onToggleFavorite={toggleFavorite}
+          onUpdate={updateRecipe}
         />
       ))}
     </div>
