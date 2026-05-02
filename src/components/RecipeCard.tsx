@@ -67,20 +67,22 @@ export default function RecipeCard({ recipe, onToggleFavorite, onUpdate, onDelet
       {open && (
         <>
           {isEditing ? (
-            <div>
+            <div style={styles.editContainer}>
               <label>
                 料理名
                 <input
+                  style={{width: "100%", padding: 8, borderRadius: 6, border: "1px solid #ccc"}}
                   value={editName || ""}
                   onChange={(e) => setEditName(e.target.value)}
                 />
               </label>
 
-              <p>食材：</p>
+              <p style={{marginTop: 8}}>食材：</p>
 
               {editIngredients.map((ing, idx) => (
-                <div key={idx}>
+                <div key={idx} style={{display: "flex", gap: 8}}>
                   <input type="text"
+                    style={{flex: 2, padding: 8, borderRadius: 6, border: "1px solid #ccc"}}
                     value={ing.name}
                     placeholder="食材"
                     onChange={(e) => {
@@ -93,6 +95,7 @@ export default function RecipeCard({ recipe, onToggleFavorite, onUpdate, onDelet
 
                   <input type="text"
                     value={ing.amount}
+                    style={{flex: 1, minWidth: 80, padding: 8, borderRadius: 6, border: "1px solid #ccc"}}
                     placeholder="分量"
                     onChange={(e) => {
                       const newList = editIngredients.map((item, i) =>
@@ -105,6 +108,7 @@ export default function RecipeCard({ recipe, onToggleFavorite, onUpdate, onDelet
               ))}
 
               <button
+                style={{alignSelf: "flex-start"}}
                 onClick={() =>
                 setEditIngredients([...editIngredients, { name: "", amount: ""}])
                 }>
@@ -114,12 +118,14 @@ export default function RecipeCard({ recipe, onToggleFavorite, onUpdate, onDelet
               <label>
                 レシピ
                 <textarea
+                  style={{width: "100%", padding: 8, borderRadius: 6, border: "1px solid #ccc"}}
                   value={editMemo || ""}
                   onChange={(e) => setEditMemo(e.target.value)}
                 />
               </label>
 
               <button
+                style={styles.saveButton}
                 onClick={() => {
                   onUpdate({
                     ...recipe,
@@ -175,6 +181,11 @@ const styles: any = {
     boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
     marginBottom: 12,
   },
+  editContainer: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 8,
+  },
   header: {
     display: "flex",
     justifyContent: "space-between",
@@ -189,5 +200,13 @@ const styles: any = {
   tag: {
     color: "#888",
     fontSize: 12,
+  },
+  saveButton: {
+    marginTop: 8,
+    padding: 10,
+    borderRadius: 8,
+    border: "none",
+    background: "#333",
+    color: "#fff",
   },
 };
