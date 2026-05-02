@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { Recipe } from "../types/recipe";
+import styles from "./RecipeForm.module.css";
 
 type Props = {
   onAdd: (recipe: Recipe) => void;
@@ -33,18 +34,18 @@ export default function RecipeForm({ onAdd }: Props) {
   };
 
   return (
-    <div style={styles.form}>
+    <div className={styles.form}>
       <input
-        style={styles.input}
+        className={styles.input}
         placeholder="料理名"
         value={name}
         onChange={e => setName(e.target.value)}
       />
 
       {ingredients.map((ing, index) => (
-        <div key={index} style={{ display: "flex", gap: 8}}>
+        <div key={index} className={styles.row}>
             <input
-              style={{...styles.input, flex: 2}}
+              className={`${styles.input} ${styles.ingredientName}`}
               placeholder="食材"
               value={ing.name}
               onChange={e => {
@@ -54,7 +55,7 @@ export default function RecipeForm({ onAdd }: Props) {
               }}
             />
             <input
-              style={{...styles.input, flex: 1, minWidth: 80}}
+              className={`${styles.input} ${styles.ingredientAmount}`}
               placeholder="分量"
               value={ing.amount}
               onChange={e => {
@@ -66,55 +67,27 @@ export default function RecipeForm({ onAdd }: Props) {
         </div>
       ))}
 
-      <button type="button" onClick={() => setIngredients([...ingredients, { name: "", amount: ""}])}>
+      <button type="button" className={styles.addButton} onClick={() => setIngredients([...ingredients, { name: "", amount: ""}])}>
         + 食材追加
       </button>
 
       <input
-        style={styles.input}
+        className={styles.input}
         placeholder="タグ（和食 / 洋食 / 中華）"
         value={tag}
         onChange={e => setTag(e.target.value)}
       />
 
       <textarea
-        style={styles.textarea}
+        className={styles.textarea}
         placeholder="レシピ・メモ"
         value={memo}
         onChange={e => setMemo(e.target.value)}
       />
 
-      <button style={styles.button} onClick={handleSubmit}>
+      <button className={styles.button} onClick={handleSubmit}>
         ＋ 追加
       </button>
     </div>
   );
 }
-
-const styles: any = {
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    gap: 8,
-    marginBottom: 20,
-  },
-  input: {
-    padding: 10,
-    borderRadius: 8,
-    border: "1px solid #ccc",
-  },
-  textarea: {
-    padding: 10,
-    borderRadius: 8,
-    border: "1px solid #ccc",
-    minHeight: 60,
-  },
-  button: {
-    padding: 12,
-    borderRadius: 8,
-    border: "none",
-    background: "#333",
-    color: "#fff",
-    fontSize: 16,
-  },
-};

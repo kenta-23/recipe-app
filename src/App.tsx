@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { Recipe } from "./types/recipe";
 import RecipeForm from "./components/RecipeForm";
 import RecipeCard from "./components/RecipeCard";
+import styles from "./App.module.css";
 
 export default function App() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -52,7 +53,7 @@ export default function App() {
       i.name.toLowerCase()
     );
 
-    const matcheSearch =
+    const matchSearch =
       keywords.length === 0 ||
       keywords.every(keyword =>
         ingredientNames.some(name => name.includes(keyword))
@@ -63,22 +64,10 @@ export default function App() {
       recipe.tag.toLowerCase().includes(tagFilter.toLowerCase());
 
       if (showFavoritesOnly && !recipe.favorite) return false;
-      
-      return matcheSearch && matchTag;
+      return matchSearch && matchTag;
     });
     
     const uniqueTags = [...new Set(recipes.map(r => r.tag).filter(tag => tag && tag.trim()))];
-
-    const styles = {
-      input: {
-        display: "block",
-        padding: 10,
-        borderRadius: 8,
-        border: "1px solid #ccc",
-        width: "100%",
-        boxSizing: "border-box" as const,
-      },
-    };
 
     const sortedRecipes = [...filteredRecipes].sort((a, b) => {
       // お気に入り優先
@@ -90,33 +79,18 @@ export default function App() {
     });
 
   return (
-    <div style={{
-      maxWidth: 520,
-      margin: "0 auto",
-      padding: 16,
-      display: "flex",
-      flexDirection: "column",
-      gap: 12,
-    }}>
+    <div className={styles.container}>
 
-      <h1 style={{ textAlign: "center" }}>レシピアプリ</h1>
+      <h1 className={styles.title}>レシピアプリ</h1>
 
       <RecipeForm onAdd={addRecipe} />
 
-      <div style={{
-        background: "#fff",
-        padding: 12,
-        borderRadius: 12,
-        boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
-        display: "flex",
-        flexDirection: "column",
-        gap: 8,
-      }}>
+      <div className={styles.searchBox}>
         <input type="text"
           placeholder="食材で検索（例：卵 鶏肉）"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          style={styles.input}
+          className={styles.input}
         />
 
         <label>
@@ -124,7 +98,7 @@ export default function App() {
           <select
             value={tagFilter}
             onChange={(e) => setTagFilter(e.target.value)}
-            style={styles.input}
+            className={styles.input}
           >
             <option value="">すべてのタグ</option>
             {uniqueTags.map(tag => (
@@ -137,13 +111,7 @@ export default function App() {
 
         <button
           onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
-          style={{
-            padding: 8,
-            borderRadius: 8,
-            border: "1px solid #ccc",
-            background: showFavoritesOnly ? "#333" : "#fff",
-            color: showFavoritesOnly ? "#fff" : "#000",
-          }}
+          className={`${styles.favoriteButton} ${showFavoritesOnly ? styles.favoriteActive : ""}`}
         >
           {showFavoritesOnly ? "★ お気に入りのみ表示中" : "☆ お気に入りのみ表示"}
         </button>
@@ -151,7 +119,7 @@ export default function App() {
       </div>
 
       {sortedRecipes.length === 0 ? (
-        <p style={{ textAlign: "center", color: "#888", marginTop: 20 }}>
+        <p className={styles.emptyMessage}>
           {search || tagFilter || showFavoritesOnly
             ? "条件に一致するレシピがありません"
             : "レシピがありません"}

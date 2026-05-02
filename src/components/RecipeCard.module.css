@@ -1,0 +1,114 @@
+@charset "UTF-8";
+
+.card {
+  background: #fff;
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  margin-bottom: 12px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.star {
+  font-size: 20px;
+  background: none;
+  border: none;
+}
+
+.editContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sectionTitle {
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+.input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+}
+
+.ingredientName {
+  flex: 2;
+}
+
+.ingredientAmount {
+  flex: 1;
+  min-width: 80px;
+}
+
+.addButton {
+  align-self: flex-start;
+}
+
+.textarea {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  min-height: 140px;
+  resize: vertical;
+  box-sizing: border-box;
+  line-height: 1.5;
+}
+
+.saveButton {
+  margin-top: 8px;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: #333;
+  color: #fff;
+}
+
+.tag {
+  color: #888;
+  font-size: 12px;
+}
+
+.ingredientRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 2px 0;
+  width: 100%;
+}
+
+.amount {
+  text-align: right;
+  min-width: 60px;
+}
+
+.spacer {
+  height: 12px;
+}
+
+.sectionLabel {
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.memoText {
+  white-space: pre-line;
+}

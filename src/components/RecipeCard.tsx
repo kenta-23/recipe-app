@@ -1,5 +1,6 @@
 import type { Recipe } from "../types/recipe";
 import { useState, useEffect } from "react";
+import styles from "./RecipeCard.module.css";
 
 type Props = {
     recipe: Recipe;
@@ -23,15 +24,15 @@ export default function RecipeCard({ recipe, onToggleFavorite, onUpdate, onDelet
   }, [recipe]);
 
   return (
-    <div style={styles.card}>
-      <div style={styles.header} onClick={() => setOpen(!open)}>
+    <div className={styles.card}>
+      <div className={styles.header} onClick={() => setOpen(!open)}>
         <h3>
           {open ? "▼" : "▶"} {recipe.name}
         </h3>
 
-        <div style={{ display: "flex", gap: 8}}>
+        <div className={styles.actions}>
           <button
-            style={styles.star}
+            className={styles.star}
             onClick={(e) => {
               e.stopPropagation();
               onToggleFavorite(recipe.id);
@@ -40,6 +41,7 @@ export default function RecipeCard({ recipe, onToggleFavorite, onUpdate, onDelet
           </button>
 
           <button
+            className={styles.editButton}
             onClick={(e) => {
               e.stopPropagation();
               setIsEditing(!isEditing);
@@ -67,22 +69,22 @@ export default function RecipeCard({ recipe, onToggleFavorite, onUpdate, onDelet
       {open && (
         <>
           {isEditing ? (
-            <div style={styles.editContainer}>
+            <div className={styles.editContainer}>
               <label>
                 料理名
                 <input
-                  style={{width: "100%", padding: 8, borderRadius: 6, border: "1px solid #ccc", boxSizing: "border-box" as const}}
+                  className={styles.input}
                   value={editName || ""}
                   onChange={(e) => setEditName(e.target.value)}
                 />
               </label>
 
-              <p style={{marginTop: 8}}>食材：</p>
+              <p className={styles.sectionLabel}>食材：</p>
 
               {editIngredients.map((ing, idx) => (
-                <div key={idx} style={{display: "flex", gap: 8}}>
+                <div key={idx} className={styles.row}>
                   <input type="text"
-                    style={{flex: 2, padding: 8, borderRadius: 6, border: "1px solid #ccc"}}
+                    className={`${styles.input} ${styles.ingredientName}`}
                     value={ing.name}
                     placeholder="食材"
                     onChange={(e) => {
@@ -95,7 +97,7 @@ export default function RecipeCard({ recipe, onToggleFavorite, onUpdate, onDelet
 
                   <input type="text"
                     value={ing.amount}
-                    style={{flex: 1, minWidth: 80, padding: 8, borderRadius: 6, border: "1px solid #ccc"}}
+                    className={`${styles.input} ${styles.ingredientAmount}`}
                     placeholder="分量"
                     onChange={(e) => {
                       const newList = editIngredients.map((item, i) =>
@@ -108,7 +110,7 @@ export default function RecipeCard({ recipe, onToggleFavorite, onUpdate, onDelet
               ))}
 
               <button
-                style={{alignSelf: "flex-start"}}
+                className={styles.addButton}
                 onClick={() =>
                 setEditIngredients([...editIngredients, { name: "", amount: ""}])
                 }>
@@ -118,23 +120,14 @@ export default function RecipeCard({ recipe, onToggleFavorite, onUpdate, onDelet
               <label>
                 レシピ
                 <textarea
-                  style={{
-                    width: "100%",
-                    padding: 8,
-                    borderRadius: 6,
-                    border: "1px solid #ccc",
-                    minHeight: 140,
-                    resize: "vertical",
-                    boxSizing: "border-box" as const,
-                    lineHeight: 1.5,
-                 }}
+                  className={styles.textarea}
                   value={editMemo || ""}
                   onChange={(e) => setEditMemo(e.target.value)}
                 />
               </label>
 
               <button
-                style={styles.saveButton}
+                className={styles.saveButton}
                 onClick={() => {
                   onUpdate({
                     ...recipe,
@@ -150,26 +143,26 @@ export default function RecipeCard({ recipe, onToggleFavorite, onUpdate, onDelet
             </div>
           ) : (
             <>
-              {recipe.tag && <p style={styles.tag}>#{recipe.tag}</p>}
+              {recipe.tag && <p className={styles.tag}>#{recipe.tag}</p>}
 
               <div>
-                <p style={{ marginBottom: 4}}>食材：</p>
+                <p className={styles.sectionLabel}>食材：</p>
                 {recipe.ingredients.map((i, idx) => (
-                    <div key={idx} style={{display: "flex", justifyContent: "space-between", padding: "2px 0", width: "100%",}}>
+                    <div key={idx} className={styles.ingredientRow}>
                       <span>{i.name}</span>
-                      <span style={{textAlign: "right", minWidth: 60}}>
+                      <span className={styles.amount}>
                         {i.amount}
                       </span>
                     </div>
                 ))}
               </div>
         
-              <div style={{ height: 12}} />
+              <div className={styles.spacer} />
         
               {recipe.memo && (
                 <div>
-                  <p style={{marginBottom: 4 }}>レシピ：</p>
-                  <p style={{ whiteSpace: "pre-line"}}>
+                  <p className={styles.sectionLabel}>レシピ：</p>
+                  <p className={styles.memoText}>
                     {recipe.memo}
                   </p>
                 </div>
@@ -181,41 +174,3 @@ export default function RecipeCard({ recipe, onToggleFavorite, onUpdate, onDelet
     </div>
   );
 }
-
-const styles: any = {
-  card: {
-    background: "#fff",
-    padding: 12,
-    borderRadius: 12,
-    boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
-    marginBottom: 12,
-  },
-  editContainer: {
-    display: "flex",
-    flexDirection: "column",
-    gap: 8,
-  },
-  header: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    gap: 8,
-  },
-  star: {
-    fontSize: 20,
-    background: "none",
-    border: "none",
-  },
-  tag: {
-    color: "#888",
-    fontSize: 12,
-  },
-  saveButton: {
-    marginTop: 8,
-    padding: 10,
-    borderRadius: 8,
-    border: "none",
-    background: "#333",
-    color: "#fff",
-  },
-};
