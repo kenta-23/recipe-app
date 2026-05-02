@@ -44,7 +44,7 @@ export default function App() {
     if (!search.trim() && !showFavoritesOnly && !tagFilter.trim()) return true;
 
     const keywords = search
-      .split(/[, ]+/)
+      .split(/[\s, ]+/)
       .map(k => k.trim().toLowerCase())
       .filter(Boolean);
     
