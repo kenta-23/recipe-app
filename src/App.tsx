@@ -68,13 +68,15 @@ export default function App() {
     });
     
     const uniqueTags = [...new Set(recipes.map(r => r.tag).filter(tag => tag && tag.trim()))];
-    
+
     const styles = {
       input: {
+        display: "block",
         padding: 10,
         borderRadius: 8,
         border: "1px solid #ccc",
         width: "100%",
+        boxSizing: "border-box" as const,
       },
     };
 

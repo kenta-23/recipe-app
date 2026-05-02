@@ -44,7 +44,7 @@ export default function RecipeForm({ onAdd }: Props) {
       {ingredients.map((ing, index) => (
         <div key={index} style={{ display: "flex", gap: 8}}>
             <input
-              style={styles.input}
+              style={{...styles.input, flex: 2}}
               placeholder="食材"
               value={ing.name}
               onChange={e => {
@@ -54,7 +54,7 @@ export default function RecipeForm({ onAdd }: Props) {
               }}
             />
             <input
-              style={styles.input}
+              style={{...styles.input, flex: 1, minWidth: 80}}
               placeholder="分量"
               value={ing.amount}
               onChange={e => {
