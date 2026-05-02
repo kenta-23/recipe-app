@@ -62,69 +62,82 @@ export default function App() {
       !tagFilter.trim() ||
       recipe.tag.toLowerCase().includes(tagFilter.toLowerCase());
 
-    if (showFavoritesOnly && !recipe.favorite) return false;
-
+      if (showFavoritesOnly && !recipe.favorite) return false;
+      
+      return matcheSearch && matchTag;
+    });
     
-    return matcheSearch && matchTag;
-  });
-  
-  const uniqueTags = [...new Set(recipes.map(r => r.tag).filter(tag => tag && tag.trim()))];
+    const uniqueTags = [...new Set(recipes.map(r => r.tag).filter(tag => tag && tag.trim()))];
+    
+    const styles = {
+      input: {
+        padding: 10,
+        borderRadius: 8,
+        border: "1px solid #ccc",
+        width: "100%",
+      },
+    };
 
   return (
-    <div style={{ maxWidth: 480, margin: "0 auto", padding: 16 }}>
+    <div style={{
+      maxWidth: 520,
+      margin: "0 auto",
+      padding: 16,
+      display: "flex",
+      flexDirection: "column",
+      gap: 12,
+    }}>
+
       <h1 style={{ textAlign: "center" }}>レシピアプリ</h1>
 
       <RecipeForm onAdd={addRecipe} />
 
-      <input type="text"
-        placeholder="食材で検索（例：卵 鶏肉）"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        style={{
-          width: "100%",
-          padding: 10,
-          marginBottom: 16,
-          borderRadius: 8,
-          border: "1px solid #ccc",
-        }}
-      />
+      <div style={{
+        background: "#fff",
+        padding: 12,
+        borderRadius: 12,
+        boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+        display: "flex",
+        flexDirection: "column",
+        gap: 8,
+      }}>
+        <input type="text"
+          placeholder="食材で検索（例：卵 鶏肉）"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          style={styles.input}
+        />
 
-      <label>
-        タグで絞り込み
-        <select
-          value={tagFilter}
-          onChange={(e) => setTagFilter(e.target.value)}
+        <label>
+          タグで絞り込み
+          <select
+            value={tagFilter}
+            onChange={(e) => setTagFilter(e.target.value)}
+            style={styles.input}
+          >
+            <option value="">すべてのタグ</option>
+            {uniqueTags.map(tag => (
+              <option key={tag} value={tag}>
+                {tag}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <button
+          onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
           style={{
-            width: "100%",
-            padding: 10,
-            marginBottom: 16,
+            padding: 8,
             borderRadius: 8,
             border: "1px solid #ccc",
+            background: showFavoritesOnly ? "#333" : "#fff",
+            color: showFavoritesOnly ? "#fff" : "#000",
           }}
         >
-          <option value="">すべてのタグ</option>
-          
-          {uniqueTags.map(tag => (
-            <option key={tag} value={tag}>
-              {tag}
-            </option>
-          ))}
-        </select>
-      </label>
+          {showFavoritesOnly ? "★ お気に入りのみ表示中" : "☆ お気に入りのみ表示"}
+        </button>
 
-      <button
-        onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
-        style={{
-          marginBottom: 12,
-          padding: 8,
-          borderRadius: 8,
-          border: "1px solid #ccc",
-          background: showFavoritesOnly ? "#333" : "#fff",
-          color: showFavoritesOnly ? "#fff" : "#000",
-        }}
-      >
-        {showFavoritesOnly ? "★ お気に入りのみ表示中" : "☆ お気に入りのみ表示"}
-      </button>
+      </div>
 
       {filteredRecipes.map(r => (
         <RecipeCard
@@ -137,4 +150,5 @@ export default function App() {
       ))}
     </div>
   );
+
 }

@@ -179,6 +179,7 @@ const styles: any = {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
+    gap: 8,
   },
   star: {
     fontSize: 20,
