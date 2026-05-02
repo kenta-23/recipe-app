@@ -118,7 +118,16 @@ export default function RecipeCard({ recipe, onToggleFavorite, onUpdate, onDelet
               <label>
                 レシピ
                 <textarea
-                  style={{width: "100%", padding: 8, borderRadius: 6, border: "1px solid #ccc"}}
+                  style={{
+                    width: "100%",
+                    padding: 8,
+                    borderRadius: 6,
+                    border: "1px solid #ccc",
+                    minHeight: 140,
+                    resize: "vertical",
+                    boxSizing: "border-box" as const,
+                    lineHeight: 1.5,
+                 }}
                   value={editMemo || ""}
                   onChange={(e) => setEditMemo(e.target.value)}
                 />
