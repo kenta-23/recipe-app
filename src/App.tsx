@@ -80,6 +80,15 @@ export default function App() {
       },
     };
 
+    const sortedRecipes = [...filteredRecipes].sort((a, b) => {
+      // お気に入り優先
+      if (a.favorite && !b.favorite) return -1;
+      if (!a.favorite && b.favorite) return 1;
+
+      // 新しい順（idが大きい=新しい）
+      return b.id - a.id;
+    });
+
   return (
     <div style={{
       maxWidth: 520,
@@ -141,7 +150,7 @@ export default function App() {
 
       </div>
 
-      {filteredRecipes.map(r => (
+      {sortedRecipes.map(r => (
         <RecipeCard
           key={r.id}
           recipe={r}
