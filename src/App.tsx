@@ -150,15 +150,23 @@ export default function App() {
 
       </div>
 
-      {sortedRecipes.map(r => (
-        <RecipeCard
-          key={r.id}
-          recipe={r}
-          onToggleFavorite={toggleFavorite}
-          onUpdate={updateRecipe}
-          onDelete={deleteRecipe}
-        />
-      ))}
+      {sortedRecipes.length === 0 ? (
+        <p style={{ textAlign: "center", color: "#888", marginTop: 20 }}>
+          {search || tagFilter || showFavoritesOnly
+            ? "条件に一致するレシピがありません"
+            : "レシピがありません"}
+        </p>
+      ) : (
+        sortedRecipes.map(r => (
+          <RecipeCard
+            key={r.id}
+            recipe={r}
+            onToggleFavorite={toggleFavorite}
+            onUpdate={updateRecipe}
+            onDelete={deleteRecipe}
+          />
+        ))
+      )}
     </div>
   );
 
