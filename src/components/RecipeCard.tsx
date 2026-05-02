@@ -71,7 +71,7 @@ export default function RecipeCard({ recipe, onToggleFavorite, onUpdate, onDelet
               <label>
                 料理名
                 <input
-                  style={{width: "100%", padding: 8, borderRadius: 6, border: "1px solid #ccc"}}
+                  style={{width: "100%", padding: 8, borderRadius: 6, border: "1px solid #ccc", boxSizing: "border-box" as const}}
                   value={editName || ""}
                   onChange={(e) => setEditName(e.target.value)}
                 />
