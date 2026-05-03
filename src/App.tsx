@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { Recipe } from "./types/recipe";
 import RecipeForm from "./components/RecipeForm";
 import RecipeCard from "./components/RecipeCard";
