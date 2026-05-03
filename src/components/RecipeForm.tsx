@@ -1,6 +1,8 @@
 import { useState } from "react";
 import type { Recipe } from "../types/recipe";
 import styles from "./RecipeForm.module.css";
+import Input from "./common/Input";
+import Textarea from "./common/Textarea";
 
 type Props = {
   onAdd: (recipe: Recipe) => void;
@@ -35,8 +37,7 @@ export default function RecipeForm({ onAdd }: Props) {
 
   return (
     <div className={styles.form}>
-      <input
-        className={styles.input}
+      <Input
         placeholder="料理名"
         value={name}
         onChange={e => setName(e.target.value)}
@@ -44,23 +45,24 @@ export default function RecipeForm({ onAdd }: Props) {
 
       {ingredients.map((ing, index) => (
         <div key={index} className={styles.row}>
-            <input
-              className={`${styles.input} ${styles.ingredientName}`}
+            <Input
               placeholder="食材"
               value={ing.name}
               onChange={e => {
-                const newList = [...ingredients];
-                newList[index].name = e.target.value;
+                const newList = ingredients.map((item, i) =>
+                  i === index ? {...item, name: e.target.value} : item
+                );
                 setIngredients(newList);
               }}
             />
-            <input
-              className={`${styles.input} ${styles.ingredientAmount}`}
+            <Input
+              className={styles.ingredientAmount}
               placeholder="分量"
               value={ing.amount}
               onChange={e => {
-                const newList = [...ingredients];
-                newList[index].amount = e.target.value;
+                const newList = ingredients.map((item, i) =>
+                  i === index ? {...item, amount: e.target.value} : item
+                );
                 setIngredients(newList);
               }}
             />
@@ -71,15 +73,13 @@ export default function RecipeForm({ onAdd }: Props) {
         + 食材追加
       </button>
 
-      <input
-        className={styles.input}
-        placeholder="タグ（和食 / 洋食 / 中華）"
+      <Input
+        placeholder="タグ（和食 / 洋食 / 中華 etc...）"
         value={tag}
         onChange={e => setTag(e.target.value)}
       />
 
-      <textarea
-        className={styles.textarea}
+      <Textarea
         placeholder="レシピ・メモ"
         value={memo}
         onChange={e => setMemo(e.target.value)}

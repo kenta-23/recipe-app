@@ -3,21 +3,13 @@ import type { Recipe } from "./types/recipe";
 import RecipeForm from "./components/RecipeForm";
 import RecipeCard from "./components/RecipeCard";
 import styles from "./App.module.css";
+import { useLocalStorage } from "./hooks/useLocalStorage";
 
 export default function App() {
-  const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [recipes, setRecipes] = useLocalStorage<Recipe[]>("recipes", []);
   const [search, setSearch] = useState("");
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
   const [tagFilter, setTagFilter] = useState("");
-
-  useEffect(() => {
-    const saved = localStorage.getItem("recipes");
-    if (saved) setRecipes(JSON.parse(saved));
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("recipes", JSON.stringify(recipes));
-  }, [recipes]);
 
   const addRecipe = (recipe: Recipe) => {
     setRecipes([recipe, ...recipes]);
