@@ -85,7 +85,7 @@ export default function RecipeForm({ onAdd }: Props) {
         onChange={e => setMemo(e.target.value)}
       />
 
-      <button className={styles.button} onClick={handleSubmit}>
+      <button className={styles.saveButton} onClick={handleSubmit}>
         ＋ 追加
       </button>
     </div>
