@@ -4,6 +4,7 @@ import RecipeForm from "./components/RecipeForm";
 import RecipeCard from "./components/RecipeCard";
 import styles from "./App.module.css";
 import { useLocalStorage } from "./hooks/useLocalStorage";
+import Input from "./components/common/Input";
 
 export default function App() {
   const [recipes, setRecipes] = useLocalStorage<Recipe[]>("recipes", []);
@@ -78,11 +79,10 @@ export default function App() {
       <RecipeForm onAdd={addRecipe} />
 
       <div className={styles.searchBox}>
-        <input type="text"
+        <Input
           placeholder="食材で検索（例：卵 鶏肉）"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className={styles.input}
         />
 
         <label>

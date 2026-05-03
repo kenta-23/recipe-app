@@ -7,14 +7,6 @@
   margin-bottom: 20px;
 }
 
-.input {
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  width: 100%;
-  box-sizing: border-box;
-}
-
 .row {
   display: flex;
   gap: 8px;
@@ -27,15 +19,6 @@
 .ingredientAmount {
   flex: 1;
   min-width: 80px;
-}
-
-.textarea {
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  min-height: 60px;
-  width: 100%;
-  box-sizing: border-box;
 }
 
 .button {

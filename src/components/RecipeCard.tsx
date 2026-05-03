@@ -1,6 +1,8 @@
 import type { Recipe } from "../types/recipe";
 import { useState, useEffect } from "react";
 import styles from "./RecipeCard.module.css";
+import Input from "./common/Input";
+import Textarea from "./common/Textarea";
 
 type Props = {
     recipe: Recipe;
@@ -72,8 +74,7 @@ export default function RecipeCard({ recipe, onToggleFavorite, onUpdate, onDelet
             <div className={styles.editContainer}>
               <label>
                 料理名
-                <input
-                  className={styles.input}
+                <Input
                   value={editName || ""}
                   onChange={(e) => setEditName(e.target.value)}
                 />
@@ -83,8 +84,8 @@ export default function RecipeCard({ recipe, onToggleFavorite, onUpdate, onDelet
 
               {editIngredients.map((ing, idx) => (
                 <div key={idx} className={styles.row}>
-                  <input type="text"
-                    className={`${styles.input} ${styles.ingredientName}`}
+                  <Input
+                    className={styles.ingredientName}
                     value={ing.name}
                     placeholder="食材"
                     onChange={(e) => {
@@ -95,9 +96,9 @@ export default function RecipeCard({ recipe, onToggleFavorite, onUpdate, onDelet
                     }}
                   />
 
-                  <input type="text"
+                  <Input
                     value={ing.amount}
-                    className={`${styles.input} ${styles.ingredientAmount}`}
+                    className={styles.ingredientAmount}
                     placeholder="分量"
                     onChange={(e) => {
                       const newList = editIngredients.map((item, i) =>
@@ -119,8 +120,7 @@ export default function RecipeCard({ recipe, onToggleFavorite, onUpdate, onDelet
 
               <label>
                 レシピ
-                <textarea
-                  className={styles.textarea}
+                <Textarea
                   value={editMemo || ""}
                   onChange={(e) => setEditMemo(e.target.value)}
                 />

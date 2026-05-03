@@ -37,14 +37,6 @@
   margin-bottom: 4px;
 }
 
-.input {
-  width: 100%;
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-}
-
 .row {
   display: flex;
   gap: 8px;
@@ -61,17 +53,6 @@
 
 .addButton {
   align-self: flex-start;
-}
-
-.textarea {
-  width: 100%;
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  min-height: 140px;
-  resize: vertical;
-  box-sizing: border-box;
-  line-height: 1.5;
 }
 
 .saveButton {
