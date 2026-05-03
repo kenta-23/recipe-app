@@ -1,5 +1,12 @@
 @charset "UTF-8";
 
+body {
+  font-family: 'Inter', 'Noto Sans JP', sans-serif;
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: 0.02em;
+}
+
 :root {
   --main-color: #4f46e5;
   --bg-color: #f7f7fb;
@@ -15,7 +22,11 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  background: var(--bg-color);
+  background: linear-gradient(
+    180deg,
+    #f7f7fb 0%,
+    #eef1ff
+  );
   min-height: 100vh;
 }
 
@@ -37,11 +48,13 @@
   padding: 8px;
   border-radius: 10px;
   border: 1px solid #ddd;
+  background: #fff;
 }
 
 .favoriteActive {
-  background: var(--main-color);
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
   color: #fff;
+  border: none;
 }
 
 .emptyMessage {
